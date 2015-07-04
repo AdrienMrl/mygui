@@ -16,23 +16,28 @@ class Widget {
     int getX() const { return mpx; }
     int getY() const { return mpy; }
     sf::Vector2i getPosRelative() const;
-    virtual void onClick(sf::Vector2i pos);
-	virtual void onKeyPressed(sf::Keyboard::Key k);
     void onEvent(sf::Event);
 	int take(int idx, Widget *&);
 	virtual const Widget *getFocused();
+	virtual void setColor(const sf::Color& color);
 
-    void setOnMouseDownListener(void (*ptr)());
+    void setOnMouseDownListener(void (*ptr)(sf::Vector2i));
+    virtual void OnMouseDown(sf::Vector2i pos);
     void setOnKeyPressedListener(void (*ptr)(sf::Keyboard::Key key));
+	virtual void OnKeyPressed(sf::Keyboard::Key k);
+    void setOnKeyReleasedListener(void (*ptr)(sf::Keyboard::Key key));
+	virtual void OnKeyReleased(sf::Keyboard::Key);
 
   protected:
     int msx, msy, mpx, mpy;
     sf::RenderWindow *mwindow;
     Widget* parent;
     std::list<Widget *> children;
+	sf::Color mColor;
 
-    void (*mOnMouseDownListener)() = NULL;
+    void (*mOnMouseDownListener)(sf::Vector2i pos) = NULL;
     void (*mOnKeyPressedListener)(sf::Keyboard::Key) = NULL;
+    void (*mOnKeyReleasedListener)(sf::Keyboard::Key) = NULL;
 
     void addWidget(Widget *);
 	int take(int idx, int pos, Widget *&);
@@ -65,14 +70,21 @@ class Base : public Widget {
 
 	public:
 		Base(int, int, int, int, Widget *);
-		void onKeyPressed(sf::Keyboard::Key);
+		void OnKeyPressed(sf::Keyboard::Key);
+		void OnKeyReleased(sf::Keyboard::Key);
 		const Widget *getFocused();
 
 	private:
 		unsigned focus_idx = 0;
 		Widget *focused = NULL;
 
+		bool hasShift = false;
 		void focusNext();
+};
+
+class Point : public Rectangle {
+	public:
+		Point(int, int, Widget *);
 };
 
 #endif

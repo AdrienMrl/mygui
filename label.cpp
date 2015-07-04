@@ -7,7 +7,7 @@ Label::Label(int px, int py, const std::string& txt, Widget *parent) :
 {
 	setText(txt);
 	text.setPosition(sf::Vector2f(px, py));
-	text.setColor(sf::Color(0, 0, 0));
+	mColor = sf::Color(0, 0, 0);
 }
 
 void Label::setText(const std::string& txt) {
@@ -25,6 +25,7 @@ sf::Vector2i Label::draw() {
 	sf::Vector2i dimens = Widget::draw();
 
 	text.setPosition(mpx, mpy);
+	text.setColor(mColor);
 	assert(mwindow);
 	mwindow->draw(text);
 	return dimens;

@@ -2,7 +2,7 @@
 #include <iostream>
 
 Widget::Widget(int sx, int sy, int px, int py, Widget *parent) :
-  msx(sx), msy(sy), mpx(px), mpy(py), mwindow(NULL)
+  msx(sx), msy(sy), mpx(px), mpy(py), mwindow(NULL), mColor(100, 100, 130, 100)
 {
      setParent(parent);
 }
@@ -72,17 +72,6 @@ const Widget *Widget::getFocused() {
 	return parent->getFocused();
 }
 
-void Widget::onClick(sf::Vector2i pos) {
-	(void)pos;
-	if (mOnMouseDownListener)
-		mOnMouseDownListener();
-}
-
-void Widget::onKeyPressed(sf::Keyboard::Key key) {
-	if (mOnKeyPressedListener)
-		mOnKeyPressedListener(key);
-}
-
 void Widget::onEvent(sf::Event e) {
 
 	for (Widget *child : children)
@@ -96,26 +85,36 @@ void Widget::onEvent(sf::Event e) {
 
 			if (mouse.x <= mpx + getDimens().x && mouse.x >= mpx &&
 					mouse.y <= mpy + getDimens().y && mouse.y >= mpy)
-				onClick(sf::Vector2i(mouse.x, mouse.y));
+				OnMouseDown(sf::Vector2i(mouse.x, mouse.y));
 			break;
 		}
 		case sf::Event::KeyPressed: {
-			onKeyPressed(e.key.code);
+			OnKeyPressed(e.key.code);
 			break;
 		}
+
+		case sf::Event::KeyReleased: {
+										 OnKeyReleased(e.key.code);
+	    }
+
+
 		default: {
 			break;
 		}
 	}
 }
 
-void Widget::setOnMouseDownListener(void (*ptr)(void)) {
-	mOnMouseDownListener = ptr;
-}
+#define SET_LISTENER(name, param_type) \
+	void Widget::set##name##Listener(void (*ptr)(param_type)) { \
+		m##name##Listener = ptr; \
+	} \
+	void Widget::name(param_type param) { \
+		if (m##name##Listener) m##name##Listener(param); \
+	}
 
-void Widget::setOnKeyPressedListener(void (*ptr)(sf::Keyboard::Key)) {
-	mOnKeyPressedListener = ptr;
-}
+SET_LISTENER(OnMouseDown, sf::Vector2i)
+SET_LISTENER(OnKeyPressed, sf::Keyboard::Key)
+SET_LISTENER(OnKeyReleased, sf::Keyboard::Key)
 
 int Widget::take(int idx, Widget *&dest) {
 	return take(idx, 0, dest);
@@ -136,4 +135,8 @@ int Widget::take(int idx, int pos, Widget *&dest) {
 			return pos;
 	}
 	return pos;
+}
+
+void Widget::setColor(const sf::Color& color) {
+	mColor = color;
 }
