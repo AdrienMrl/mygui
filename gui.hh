@@ -13,7 +13,7 @@ class GUI {
     GUI(const std::string& name = "");
     void addWidget(Widget *w);
     int execute();
-    Widget base;
+    Base base;
 
   private:
     sf::RenderWindow window;

@@ -2,8 +2,8 @@
 #include <iostream>
 
 GUI::GUI(const std::string& name)
-  : window(sf::VideoMode(1920, 1080), name.c_str()),
-    base(1920, 1080, 0, 0, NULL) {
+  : base(1920, 1080, 0, 0, NULL),
+   	window(sf::VideoMode(1920, 1080), name.c_str()) {
       base.setWindow(&window);
 }
 

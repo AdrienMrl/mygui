@@ -12,7 +12,6 @@ void Widget::setWindow(sf::RenderWindow* w) {
 }
 
 sf::Vector2i Widget::getPosRelative() const {
-  sf::Vector2i dim = getDimens();
   return sf::Vector2i(mpx - parent->getX(),
                       mpy - parent->getY());
 }
@@ -51,12 +50,37 @@ sf::Vector2i Widget::draw() {
 
   for (Widget *child : children)
     child->draw();
-  return getDimens();
+
+  sf::Vector2i dimens = getDimens();
+
+  // draw the focused square
+  if (parent && this == parent->getFocused()) {
+
+	sf::RectangleShape border(sf::Vector2f(dimens.x + 10, dimens.y + 10));
+
+	border.setPosition(mpx - 5, mpy - 5);
+	border.setFillColor(sf::Color(100, 100, 100, 100));
+	mwindow->draw(border);
+  }
+
+  return dimens;
+}
+
+const Widget *Widget::getFocused() {
+	if (parent == NULL)
+		return NULL;
+	return parent->getFocused();
 }
 
 void Widget::onClick(sf::Vector2i pos) {
+	(void)pos;
 	if (mOnMouseDownListener)
 		mOnMouseDownListener();
+}
+
+void Widget::onKeyPressed(sf::Keyboard::Key key) {
+	if (mOnKeyPressedListener)
+		mOnKeyPressedListener(key);
 }
 
 void Widget::onEvent(sf::Event e) {
@@ -64,16 +88,52 @@ void Widget::onEvent(sf::Event e) {
 	for (Widget *child : children)
 		child->onEvent(e);
 
-	if (e.type == sf::Event::MouseButtonPressed) {
+	switch (e.type) {
 
-		sf::Event::MouseButtonEvent mouse = e.mouseButton;
+		case sf::Event::MouseButtonPressed: {
 
-		if (mouse.x <= mpx + getDimens().x && mouse.x >= mpx &&
-			mouse.y <= mpy + getDimens().y && mouse.y >= mpy)
-			onClick(sf::Vector2i(mouse.x, mouse.y));
+			sf::Event::MouseButtonEvent mouse = e.mouseButton;
+
+			if (mouse.x <= mpx + getDimens().x && mouse.x >= mpx &&
+					mouse.y <= mpy + getDimens().y && mouse.y >= mpy)
+				onClick(sf::Vector2i(mouse.x, mouse.y));
+			break;
+		}
+		case sf::Event::KeyPressed: {
+			onKeyPressed(e.key.code);
+			break;
+		}
+		default: {
+			break;
+		}
 	}
 }
 
 void Widget::setOnMouseDownListener(void (*ptr)(void)) {
-    mOnMouseDownListener = ptr;
+	mOnMouseDownListener = ptr;
+}
+
+void Widget::setOnKeyPressedListener(void (*ptr)(sf::Keyboard::Key)) {
+	mOnKeyPressedListener = ptr;
+}
+
+int Widget::take(int idx, Widget *&dest) {
+	return take(idx, 0, dest);
+}
+
+int Widget::take(int idx, int pos, Widget *&dest) {
+
+	if (idx == pos) {
+		dest = this;
+		return 0;
+	}
+
+	pos++;
+
+	for (Widget *child: children) {
+		pos = child->take(idx, pos, dest);
+		if (pos == 0)
+			return pos;
+	}
+	return pos;
 }

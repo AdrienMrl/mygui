@@ -2,6 +2,7 @@
 # define WIDGETS_HH_
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <list>
 
 class Widget {
@@ -16,9 +17,13 @@ class Widget {
     int getY() const { return mpy; }
     sf::Vector2i getPosRelative() const;
     virtual void onClick(sf::Vector2i pos);
+	virtual void onKeyPressed(sf::Keyboard::Key k);
     void onEvent(sf::Event);
+	int take(int idx, Widget *&);
+	virtual const Widget *getFocused();
 
     void setOnMouseDownListener(void (*ptr)());
+    void setOnKeyPressedListener(void (*ptr)(sf::Keyboard::Key key));
 
   protected:
     int msx, msy, mpx, mpy;
@@ -27,8 +32,10 @@ class Widget {
     std::list<Widget *> children;
 
     void (*mOnMouseDownListener)() = NULL;
+    void (*mOnKeyPressedListener)(sf::Keyboard::Key) = NULL;
 
     void addWidget(Widget *);
+	int take(int idx, int pos, Widget *&);
 };
 
 class Rectangle : public Widget {
@@ -52,6 +59,20 @@ class Label : public Widget {
 
   protected:
     sf::Text text;
+};
+
+class Base : public Widget {
+
+	public:
+		Base(int, int, int, int, Widget *);
+		void onKeyPressed(sf::Keyboard::Key);
+		const Widget *getFocused();
+
+	private:
+		unsigned focus_idx = 0;
+		Widget *focused = NULL;
+
+		void focusNext();
 };
 
 #endif
