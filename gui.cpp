@@ -9,7 +9,11 @@ GUI::GUI(const std::string& name)
 }
 
 void GUI::addWidget(Widget *w) {
-  w->setParent(&base);
+	w->setParent(&base);
+}
+
+void GUI::addTimer(Timer *t) {
+	timers.push_back(t);
 }
 
 int GUI::execute() {
@@ -20,7 +24,10 @@ int GUI::execute() {
 
   while (window.isOpen()) {
 	
-	  sf::sleep(delay);
+	sf::sleep(delay);
+	for (Timer *t : timers)
+		t->tick(delay);
+
     while (window.pollEvent(event)) {
 
 		window.clear(sf::Color(200, 200, 220));

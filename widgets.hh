@@ -120,4 +120,18 @@ class Picture : public Rectangle {
 
 };
 
+class GUI;
+
+class Timer : public Widget {
+
+	public:
+		Timer(int, GUI&);
+		void tick(sf::Time delay);
+
+	private:
+		int milisecToWait = 0;
+		int timerDelay;
+
+};
+
 #endif

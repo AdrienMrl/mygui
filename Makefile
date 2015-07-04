@@ -8,6 +8,7 @@ SRC = gui.cpp \
 	  button.cpp \
 	  line.cpp \
 	  picture.cpp \
+	  timer.cpp \
 
 
 OBJ =$(SRC:.cpp=.o)

@@ -32,6 +32,9 @@ int main()
   new Line(900, 900, 100, 45, &app.base);
 
   Picture *pic = new Picture(1900, 2000, 440, 660, "dog.jpg", &app.base);
-//  pic->setRepeated(true);
+  pic->setRepeated(true);
+
+  Timer *timer = new Timer(1000, app);
+  timer->setOnClickedListener(onClicked);
   return app.execute();
 }
