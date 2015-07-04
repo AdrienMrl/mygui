@@ -15,9 +15,9 @@ void Label::setText(const std::string& txt) {
 	font.loadFromFile("OpenSans-Regular.ttf");
 	text.setFont(font);
 
-	sf::FloatRect bounds = text.getLocalBounds();
-	msx = bounds.width;
-	msy = bounds.height;
+	sf::FloatRect bounds = text.getGlobalBounds();
+	msx = bounds.width + 5;
+	msy = bounds.height + 15;
 }
 
 sf::Vector2i Label::draw() {

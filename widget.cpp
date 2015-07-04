@@ -79,13 +79,20 @@ void Widget::onEvent(sf::Event e) {
 
 	switch (e.type) {
 
+		case sf::Event::MouseButtonReleased:
 		case sf::Event::MouseButtonPressed: {
 
 			sf::Event::MouseButtonEvent mouse = e.mouseButton;
 
 			if (mouse.x <= mpx + getDimens().x && mouse.x >= mpx &&
-					mouse.y <= mpy + getDimens().y && mouse.y >= mpy)
-				OnMouseDown(sf::Vector2i(mouse.x, mouse.y));
+					mouse.y <= mpy + getDimens().y && mouse.y >= mpy) {
+				if (e.type == sf::Event::MouseButtonReleased) {
+					OnMouseUp(sf::Vector2i(mouse.x, mouse.y));
+					OnClicked();
+				}
+				else
+					OnMouseDown(sf::Vector2i(mouse.x, mouse.y));
+			}
 			break;
 		}
 		case sf::Event::KeyPressed: {
@@ -112,9 +119,19 @@ void Widget::onEvent(sf::Event e) {
 		if (m##name##Listener) m##name##Listener(param); \
 	}
 
+#define SET_LISTENER_VOID(name) \
+	void Widget::set##name##Listener(void (*ptr)(void)) { \
+		m##name##Listener = ptr; \
+	} \
+	void Widget::name() { \
+		if (m##name##Listener) m##name##Listener(); \
+	}
+
 SET_LISTENER(OnMouseDown, sf::Vector2i)
+SET_LISTENER(OnMouseUp, sf::Vector2i)
 SET_LISTENER(OnKeyPressed, sf::Keyboard::Key)
 SET_LISTENER(OnKeyReleased, sf::Keyboard::Key)
+SET_LISTENER_VOID(OnClicked)
 
 int Widget::take(int idx, Widget *&dest) {
 	return take(idx, 0, dest);

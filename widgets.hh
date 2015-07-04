@@ -23,10 +23,14 @@ class Widget {
 
     void setOnMouseDownListener(void (*ptr)(sf::Vector2i));
     virtual void OnMouseDown(sf::Vector2i pos);
+    void setOnMouseUpListener(void (*ptr)(sf::Vector2i));
+	virtual void OnMouseUp(sf::Vector2i);
     void setOnKeyPressedListener(void (*ptr)(sf::Keyboard::Key key));
 	virtual void OnKeyPressed(sf::Keyboard::Key k);
     void setOnKeyReleasedListener(void (*ptr)(sf::Keyboard::Key key));
 	virtual void OnKeyReleased(sf::Keyboard::Key);
+    void setOnClickedListener(void (*ptr)(void));
+	virtual void OnClicked();
 
   protected:
     int msx, msy, mpx, mpy;
@@ -36,8 +40,10 @@ class Widget {
 	sf::Color mColor;
 
     void (*mOnMouseDownListener)(sf::Vector2i pos) = NULL;
+    void (*mOnMouseUpListener)(sf::Vector2i pos) = NULL;
     void (*mOnKeyPressedListener)(sf::Keyboard::Key) = NULL;
     void (*mOnKeyReleasedListener)(sf::Keyboard::Key) = NULL;
+    void (*mOnClickedListener)(void) = NULL;
 
     void addWidget(Widget *);
 	int take(int idx, int pos, Widget *&);
@@ -85,6 +91,17 @@ class Base : public Widget {
 class Point : public Rectangle {
 	public:
 		Point(int, int, Widget *);
+};
+
+class Button : public Rectangle {
+	public:
+		Button(int, int, const std::string&, Widget *);
+		void OnMouseDown(sf::Vector2i);
+		void OnMouseUp(sf::Vector2i);
+
+	protected:
+		Label text;
+		bool isPressed = false;
 };
 
 #endif

@@ -7,6 +7,10 @@ static void onMouseDown(sf::Vector2i unused) {
 	std::cout << "mouse down !" << std::endl;
 }
 
+static void onClicked() {
+	std::cout << "clicked !" << std::endl;
+}
+
 int main()
 {
   static GUI app("demo app");
@@ -21,6 +25,9 @@ int main()
 
   Point *p = new Point(500, 900, &app.base);
   p->setColor(sf::Color(255, 0, 0));
+
+  Button *button = new Button(800, 100, "Click me", &app.base);
+  button->setOnClickedListener(onClicked);
 
   return app.execute();
 }

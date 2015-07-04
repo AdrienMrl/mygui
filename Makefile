@@ -1,5 +1,5 @@
 NAME=libmygui.a
-SRC = gui.cpp widget.cpp rect.cpp label.cpp base.cpp point.cpp
+SRC = gui.cpp widget.cpp rect.cpp label.cpp base.cpp point.cpp button.cpp
 OBJ =$(SRC:.cpp=.o)
 CXXFLAGS=-Wall -Wextra -std=c++11 -ggdb3
 CXX=clang++
