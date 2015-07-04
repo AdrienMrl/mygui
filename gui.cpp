@@ -1,4 +1,5 @@
 #include "gui.hh"
+#include <SFML/System.hpp>
 #include <iostream>
 
 GUI::GUI(const std::string& name)
@@ -15,7 +16,11 @@ int GUI::execute() {
 
   sf::Event event;
 
+  sf::Time delay = sf::milliseconds(1000 / 30);
+
   while (window.isOpen()) {
+	
+	  sf::sleep(delay);
     while (window.pollEvent(event)) {
 
 		window.clear(sf::Color(200, 200, 220));

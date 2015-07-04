@@ -104,4 +104,20 @@ class Button : public Rectangle {
 		bool isPressed = false;
 };
 
+class Line : public Rectangle {
+	public:
+		Line(int, int, int, int, Widget *);
+};
+
+class Picture : public Rectangle {
+	public:
+		Picture(int, int, int, int, const std::string&, Widget *);
+		void setRepeated(bool);
+		sf::Vector2i draw();
+
+	private:
+		sf::Texture texture;
+
+};
+
 #endif

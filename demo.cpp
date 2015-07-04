@@ -17,7 +17,7 @@ int main()
 
   Rectangle *rectangle = new Rectangle(10, 900, 100, 100, &app.base);
   Label *test = new Label(10, 20, "I'm a label. And i'm long", rectangle);
-  new Label(100, 200, "i'm very very long", rectangle);
+  new Label(130, 200, "i'm very very long", rectangle);
   Label *green_lab = new Label(700, 220, "GREEEEEEN", rectangle);
   green_lab->setColor(sf::Color(0, 255, 0));
 
@@ -29,5 +29,9 @@ int main()
   Button *button = new Button(800, 100, "Click me", &app.base);
   button->setOnClickedListener(onClicked);
 
+  new Line(900, 900, 100, 45, &app.base);
+
+  Picture *pic = new Picture(1900, 2000, 440, 660, "dog.jpg", &app.base);
+//  pic->setRepeated(true);
   return app.execute();
 }
