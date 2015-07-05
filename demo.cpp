@@ -39,6 +39,6 @@ int main()
   timer->setOnClickedListener(onClicked);
 
   */
-  new CheckBox(1000, 200, "Hello, World", &app.base);
+  new Button(1000, 200, "Hello, World", &app.base);
   return app.execute();
 }
