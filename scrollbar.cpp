@@ -19,9 +19,9 @@ static void goDown(Widget *w) {
 ScrollBar::ScrollBar(int sx, int sy, int px, int py,
         ScrollBar::orientation orientation, Widget *parent)
     : Rectangle(sx, sy, px, py, parent),
-      up(sx, 0, 0, 0, "Yo mama's fatU", this),
-      down(sx, 0, 0, sy - 20, "Yo mama's fat", this),
-      cursor(sx, 20, 0, 0, this),
+      up(0, 0, 0, 0, "", this),
+      down(0, 0, 0, 0, "", this),
+      cursor(0, 0, 0, 0, this),
       morientation(orientation)
 {
     if (orientation == VERTICAL)
@@ -54,7 +54,7 @@ ScrollBar::ScrollBar(int sx, int sy, int px, int py,
 
 void ScrollBar::update()
 {
-    if (morientation)
+    if (morientation == VERTICAL)
         cursor.setPosition(0, up.getDimens().y +
                 (progress * (msy - (up.getDimens().y + down.getDimens().y + 10))
                  / 100));
@@ -74,4 +74,22 @@ void ScrollBar::setProgress(int new_progress)
 {
     if (new_progress >= 0 && new_progress <= 100)
         progress = new_progress;
+    update();
 }
+
+void ScrollBar::OnMouseDown(sf::Vector2i pos)
+{
+    pos.x -= mpx;
+    pos.y -= mpy;
+    if (morientation == VERTICAL) {
+        if (pos.y < up.getDimens().y || pos.y > msy - down.getDimens().y)
+            return;
+        setProgress(((float)pos.y / msy) * 100);
+    }
+    else {
+        if (pos.x < up.getDimens().x || pos.x > msx - up.getDimens().x)
+            return;
+        setProgress(((float)pos.x / msx) * 100);
+    }
+}
+

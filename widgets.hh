@@ -190,6 +190,7 @@ class ScrollBar : public Rectangle
 		int getProgress() const;
 		void update();
 		void setProgress(int);
+		virtual void OnMouseDown(sf::Vector2i pos);
 
 	protected:
 		Button up;
