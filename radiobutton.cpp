@@ -1,14 +1,12 @@
 #include "widgets.hh"
 #include <iostream>
 
-static int DIAMETER = 15;
-
 RadioButton::RadioButton(int px, int py, Widget *parent)
-    : Widget(DIAMETER * 2, DIAMETER * 2, px, py, parent),
-      circle(DIAMETER)
+    : Widget(RADIUS * 2, RADIUS * 2, px, py, parent),
+      circle(RADIUS)
 {
     circle.setOutlineColor(sf::Color::Black);
-    circle.setOutlineThickness(DIAMETER / 3);
+    circle.setOutlineThickness(RADIUS / 3);
 }
 
 

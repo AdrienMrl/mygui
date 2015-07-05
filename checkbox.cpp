@@ -2,7 +2,7 @@
 
 CheckBox::CheckBox(int px, int py, const std::string& text, Widget *parent)
     : RadioButton(px, py, parent),
-      label(0, 0, text, this), mText(text)
+      label(RADIUS * 2 + 10, 0, text, this), mText(text)
 {
 }
 
@@ -10,8 +10,8 @@ CheckBox::CheckBox(int px, int py, const std::string& text, Widget *parent)
 void CheckBox::computeDimens()
 {
     sf::Vector2i label_dim = label.getDimens();
-    msx = label_dim.x;
-    msy = label_dim.y;
+    msx = RADIUS * 2 + 10 + label_dim.x;
+    msy = RADIUS * 2;
 }
 
 void CheckBox::setText(const std::string& text)

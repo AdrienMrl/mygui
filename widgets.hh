@@ -149,6 +149,8 @@ class RadioButton : public Widget {
 		sf::Vector2i draw();
 		void OnClicked();
 
+		static const int RADIUS = 15;
+
 	protected:
 		bool checked = false;
 		sf::CircleShape circle;
