@@ -113,19 +113,19 @@ void Widget::onEvent(sf::Event e) {
 }
 
 #define SET_LISTENER(name, param_type) \
-	void Widget::set##name##Listener(void (*ptr)(param_type)) { \
+	void Widget::set##name##Listener(void (*ptr)(Widget *, param_type)) { \
 		m##name##Listener = ptr; \
 	} \
 	void Widget::name(param_type param) { \
-		if (m##name##Listener) m##name##Listener(param); \
+		if (m##name##Listener) m##name##Listener(this, param); \
 	}
 
 #define SET_LISTENER_VOID(name) \
-	void Widget::set##name##Listener(void (*ptr)(void)) { \
+	void Widget::set##name##Listener(void (*ptr)(Widget *)) { \
 		m##name##Listener = ptr; \
 	} \
 	void Widget::name() { \
-		if (m##name##Listener) m##name##Listener(); \
+		if (m##name##Listener) m##name##Listener(this); \
 	}
 
 SET_LISTENER(OnMouseDown, sf::Vector2i)
@@ -138,16 +138,19 @@ int Widget::take(int idx, Widget *&dest) {
 	return take(idx, 0, dest);
 }
 
-int Widget::take(int idx, int pos, Widget *&dest) {
+int Widget::take(int idx, int pos, Widget *&dest)
+{
 
-	if (idx == pos) {
+	if (idx == pos)
+	{
 		dest = this;
 		return 0;
 	}
 
 	pos++;
 
-	for (Widget *child: children) {
+	for (Widget *child: children)
+	{
 		pos = child->take(idx, pos, dest);
 		if (pos == 0)
 			return pos;
@@ -155,6 +158,22 @@ int Widget::take(int idx, int pos, Widget *&dest) {
 	return pos;
 }
 
-void Widget::setColor(const sf::Color& color) {
+void Widget::setColor(const sf::Color& color)
+{
 	mColor = color;
+}
+
+void Widget::setPosition(int px, int py)
+{
+	int parpx = parent ? parent->getX() : 0;
+	int parpy = parent ? parent->getY() : 0;
+
+	mpx = parpx + px;
+	mpy = parpy + py;
+}
+
+void Widget::setSize(int sx, int sy)
+{
+	msx = sx;
+	msy = sy;
 }

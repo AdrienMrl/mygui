@@ -11,6 +11,7 @@ class Widget {
     Widget(int, int, int, int, Widget *);
     void setWindow(sf::RenderWindow*);
     void setParent(Widget *);
+	Widget *getParent() const { return parent; }
     virtual sf::Vector2i draw();
     virtual sf::Vector2i getDimens() const;
     int getX() const { return mpx; }
@@ -20,16 +21,18 @@ class Widget {
 	int take(int idx, Widget *&);
 	virtual const Widget *getFocused();
 	virtual void setColor(const sf::Color& color);
+	virtual void setPosition(int px, int py);
+	virtual void setSize(int sx, int sy);
 
-    void setOnMouseDownListener(void (*ptr)(sf::Vector2i));
+    void setOnMouseDownListener(void (*ptr)(Widget *, sf::Vector2i));
     virtual void OnMouseDown(sf::Vector2i pos);
-    void setOnMouseUpListener(void (*ptr)(sf::Vector2i));
+    void setOnMouseUpListener(void (*ptr)(Widget *, sf::Vector2i));
 	virtual void OnMouseUp(sf::Vector2i);
-    void setOnKeyPressedListener(void (*ptr)(sf::Keyboard::Key key));
+    void setOnKeyPressedListener(void (*ptr)(Widget *, sf::Keyboard::Key key));
 	virtual void OnKeyPressed(sf::Keyboard::Key k);
-    void setOnKeyReleasedListener(void (*ptr)(sf::Keyboard::Key key));
+    void setOnKeyReleasedListener(void (*ptr)(Widget *, sf::Keyboard::Key key));
 	virtual void OnKeyReleased(sf::Keyboard::Key);
-    void setOnClickedListener(void (*ptr)(void));
+    void setOnClickedListener(void (*ptr)(Widget *));
 	virtual void OnClicked();
 
   protected:
@@ -39,11 +42,11 @@ class Widget {
     std::list<Widget *> children;
 	sf::Color mColor;
 
-    void (*mOnMouseDownListener)(sf::Vector2i pos) = NULL;
-    void (*mOnMouseUpListener)(sf::Vector2i pos) = NULL;
-    void (*mOnKeyPressedListener)(sf::Keyboard::Key) = NULL;
-    void (*mOnKeyReleasedListener)(sf::Keyboard::Key) = NULL;
-    void (*mOnClickedListener)(void) = NULL;
+    void (*mOnMouseDownListener)(Widget *, sf::Vector2i pos) = NULL;
+    void (*mOnMouseUpListener)(Widget *, sf::Vector2i pos) = NULL;
+    void (*mOnKeyPressedListener)(Widget *, sf::Keyboard::Key) = NULL;
+    void (*mOnKeyReleasedListener)(Widget *, sf::Keyboard::Key) = NULL;
+    void (*mOnClickedListener)(Widget *) = NULL;
 
     void addWidget(Widget *);
 	int take(int idx, int pos, Widget *&);
@@ -96,9 +99,11 @@ class Point : public Rectangle {
 class Button : public Rectangle {
 	public:
 		Button(int, int, const std::string&, Widget *);
+		Button(int sx, int sy, int, int, const std::string&, Widget *);
 		void OnMouseDown(sf::Vector2i);
 		void OnMouseUp(sf::Vector2i);
 		void setText(const std::string&);
+		void setSize(int sx, int sy);
 
 	protected:
 		Label text;
@@ -139,7 +144,8 @@ class Timer : public Widget {
 
 };
 
-class RadioButton : public Widget {
+class RadioButton : public Widget
+{
 	public:
 		RadioButton(int, int, Widget *);
 		bool isChecked() const;
@@ -157,7 +163,8 @@ class RadioButton : public Widget {
 
 };
 
-class CheckBox : public RadioButton {
+class CheckBox : public RadioButton
+{
 
 	public:
 		CheckBox(int, int, const std::string&, Widget *);
@@ -167,6 +174,29 @@ class CheckBox : public RadioButton {
     protected:
 		Label  label;
 		std::string mText;
+};
+
+class ScrollBar : public Rectangle
+{
+	public:
+
+		enum orientation {
+			HORIZONTAL,
+			VERTICAL
+		};
+
+		ScrollBar(int, int, int, int,
+				ScrollBar::orientation orientation, Widget *);
+		int getProgress() const;
+		void update();
+		void setProgress(int);
+
+	protected:
+		Button up;
+		Button down;
+		Rectangle cursor;
+		int progress = 50;
+		orientation morientation;
 };
 
 #endif

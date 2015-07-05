@@ -2,12 +2,12 @@
 #include "widgets.hh"
 #include <iostream>
 
-static void onMouseDown(sf::Vector2i unused) {
+static void onMouseDown(Widget *, sf::Vector2i unused) {
 	(void)unused;
 	std::cout << "mouse down !" << std::endl;
 }
 
-static void onClicked() {
+static void onClicked(Widget *) {
 	std::cout << "clicked !" << std::endl;
 }
 
@@ -15,9 +15,9 @@ int main()
 {
   static GUI app("demo app");
 
-  /*
   Rectangle *rectangle = new Rectangle(10, 900, 100, 100, &app.base);
   Label *test = new Label(10, 20, "I'm a label. And i'm long", rectangle);
+  test->setText("Foooooo");
   new Label(130, 200, "i'm very very long", rectangle);
   Label *green_lab = new Label(700, 220, "GREEEEEEN", rectangle);
   green_lab->setColor(sf::Color(0, 255, 0));
@@ -27,8 +27,9 @@ int main()
   Point *p = new Point(500, 900, &app.base);
   p->setColor(sf::Color(255, 0, 0));
 
-  Button *button = new Button(800, 100, "Click me", &app.base);
+  Button *button = new Button(400, 100, "Click me", &app.base);
   button->setOnClickedListener(onClicked);
+  button->setSize(300, 200);
 
   new Line(900, 900, 100, 45, &app.base);
 
@@ -38,7 +39,7 @@ int main()
   Timer *timer = new Timer(1000, app);
   timer->setOnClickedListener(onClicked);
 
-  */
-  new Button(1000, 200, "Hello, World", &app.base);
+  new ScrollBar(30, 200, 1000, 200, ScrollBar::VERTICAL, &app.base);
+  new ScrollBar(200, 30, 1300, 300, ScrollBar::HORIZONTAL, &app.base);
   return app.execute();
 }
