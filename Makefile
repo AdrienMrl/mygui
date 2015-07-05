@@ -12,6 +12,7 @@ SRC = gui.cpp \
 	  checkbox.cpp \
 	  radiobutton.cpp \
 	  scrollbar.cpp \
+	  triangle.cpp \
 
 
 OBJ =$(SRC:.cpp=.o)

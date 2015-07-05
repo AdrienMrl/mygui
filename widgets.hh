@@ -114,9 +114,20 @@ class Line : public Widget {
 	public:
 		Line(int, int, int, int, Widget *);
 		sf::Vector2i draw();
+        void setColor(const sf::Color&);
 
 	protected:
 		sf::Vertex line[2];
+};
+
+class Triangle : public Widget
+{
+    public:
+        Triangle(int, int, int, int, int, int, Widget *);
+        sf::Vector2i draw();
+
+    protected:
+        sf::ConvexShape triangle;
 };
 
 class Picture : public Rectangle {

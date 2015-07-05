@@ -31,7 +31,9 @@ int main()
   button->setOnClickedListener(onClicked);
   button->setSize(300, 200);
 
-  new Line(900, 900, 100, 45, &app.base);
+  Line *l = new Line(900, 900, 100, 45, &app.base);
+  l->setColor(sf::Color::Red);
+  
 
   Picture *pic = new Picture(1900, 2000, 440, 660, "dog.jpg", &app.base);
   pic->setRepeated(true);
@@ -41,5 +43,7 @@ int main()
 
   new ScrollBar(30, 200, 1000, 200, ScrollBar::VERTICAL, &app.base);
   new ScrollBar(200, 30, 1300, 300, ScrollBar::HORIZONTAL, &app.base);
+
+  new Triangle(20, 10, 300, 200, 10, 220, &app.base);
   return app.execute();
 }
