@@ -1,6 +1,16 @@
 #include "widgets.hh"
 
-Line::Line(int px, int py, int lenght, int rot, Widget *parent) :
-    Rectangle(lenght, 5, px, py, parent) {
-    rect.rotate(rot);
+Line::Line(int pax, int pay, int pbx, int pby, Widget *parent)
+    : Widget(pax, pay, pbx, pby, parent) {
+    line[0] = sf::Vertex(sf::Vector2f(pax, pay));
+    line[1] = sf::Vertex(sf::Vector2f(pbx, pby));
+
+    msx = pax - pbx;
+    msy = pay - pby;
+}
+
+sf::Vector2i Line::draw() {
+
+    mwindow->draw(line, 2, sf::Lines);
+    return Widget::draw();
 }

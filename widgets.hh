@@ -98,15 +98,20 @@ class Button : public Rectangle {
 		Button(int, int, const std::string&, Widget *);
 		void OnMouseDown(sf::Vector2i);
 		void OnMouseUp(sf::Vector2i);
+		void setText(const std::string&);
 
 	protected:
 		Label text;
 		bool isPressed = false;
 };
 
-class Line : public Rectangle {
+class Line : public Widget {
 	public:
 		Line(int, int, int, int, Widget *);
+		sf::Vector2i draw();
+
+	protected:
+		sf::Vertex line[2];
 };
 
 class Picture : public Rectangle {
@@ -132,6 +137,25 @@ class Timer : public Widget {
 		int milisecToWait = 0;
 		int timerDelay;
 
+};
+
+class CheckBox : Widget {
+
+	public:
+		CheckBox(int, int, const std::string&, Widget *);
+		void setText(const std::string&);
+		bool isChecked() const;
+		void toggle();
+		void setChecked(bool checked);
+		void update();
+		void computeDimens();
+		sf::Vector2i draw();
+		void OnClicked();
+
+    protected:
+		Label  label;
+		bool checked = false;
+		std::string mText;
 };
 
 #endif

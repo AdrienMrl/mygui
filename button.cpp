@@ -8,6 +8,10 @@ Button::Button(int px, int py, const std::string& txt, Widget *parent)
     OnMouseDown(sf::Vector2i(0, 0));
 }
 
+void Button::setText(const std::string& text) {
+    this->text.setText(text);
+}
+
 void Button::OnMouseUp(sf::Vector2i pos) {
     isPressed = false;
     setColor(sf::Color(100, 100, 120, 100));

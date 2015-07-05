@@ -6,11 +6,11 @@ Label::Label(int px, int py, const std::string& txt, Widget *parent) :
 	Widget(0, 0, px, py, parent)
 {
 	setText(txt);
-	text.setPosition(sf::Vector2f(px, py));
 	mColor = sf::Color(0, 0, 0);
 }
 
-void Label::setText(const std::string& txt) {
+void Label::setText(const std::string& txt)
+{
 	text.setString(txt);
 	font.loadFromFile("OpenSans-Regular.ttf");
 	text.setFont(font);
@@ -20,7 +20,8 @@ void Label::setText(const std::string& txt) {
 	msy = bounds.height + 15;
 }
 
-sf::Vector2i Label::draw() {
+sf::Vector2i Label::draw()
+{
 
 	sf::Vector2i dimens = Widget::draw();
 

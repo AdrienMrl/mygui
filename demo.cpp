@@ -15,6 +15,7 @@ int main()
 {
   static GUI app("demo app");
 
+  /*
   Rectangle *rectangle = new Rectangle(10, 900, 100, 100, &app.base);
   Label *test = new Label(10, 20, "I'm a label. And i'm long", rectangle);
   new Label(130, 200, "i'm very very long", rectangle);
@@ -36,5 +37,8 @@ int main()
 
   Timer *timer = new Timer(1000, app);
   timer->setOnClickedListener(onClicked);
+
+  */
+  new CheckBox(1000, 200, "Checkbox!", &app.base);
   return app.execute();
 }
