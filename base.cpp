@@ -31,7 +31,14 @@ void Base::OnKeyPressed(sf::Keyboard::Key key) {
 		focusNext();
 	} else if (key == sf::Keyboard::LShift) {
 		hasShift = true;
+	} else if (key == sf::Keyboard::Return) {
+		if (focused)
+			focused->OnClicked();
+	} else if (key == sf::Keyboard::Escape) {
+		focused = NULL;
+		focus_idx = 0;
 	}
+
 
 	Widget::OnKeyPressed(key);
 }
