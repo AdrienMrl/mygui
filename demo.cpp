@@ -13,7 +13,7 @@ static void onClicked(Widget *) {
 
 int main()
 {
-  static GUI app("demo app");
+  static GUI app("demo app", 0);
 
   Rectangle *rectangle = new Rectangle(10, 900, 100, 100, &app.base);
   Label *test = new Label(10, 20, "I'm a label. And i'm long", rectangle);
@@ -29,6 +29,7 @@ int main()
 
   Button *button = new Button(400, 100, "Click me", &app.base);
   button->setOnClickedListener(onClicked);
+  button->setOnMouseMoveListener(onMouseDown);
   button->setSize(300, 200);
 
   Line *l = new Line(900, 900, 100, 45, &app.base);

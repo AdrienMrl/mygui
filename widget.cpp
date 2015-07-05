@@ -73,6 +73,12 @@ const Widget *Widget::getFocused() {
 	return parent->getFocused();
 }
 
+bool Widget::doCollide(int x, int y) const
+{
+    return x <= mpx + getDimens().x && x >= mpx &&
+        y <= mpy + getDimens().y && y >= mpy;
+}
+
 void Widget::onEvent(sf::Event e) {
 
 	for (Widget *child : children)
@@ -85,8 +91,7 @@ void Widget::onEvent(sf::Event e) {
 
 			sf::Event::MouseButtonEvent mouse = e.mouseButton;
 
-			if (mouse.x <= mpx + getDimens().x && mouse.x >= mpx &&
-					mouse.y <= mpy + getDimens().y && mouse.y >= mpy) {
+			if (doCollide(mouse.x, mouse.y)) {
 				if (e.type == sf::Event::MouseButtonReleased) {
 					OnMouseUp(sf::Vector2i(mouse.x, mouse.y));
 					OnClicked();
@@ -96,6 +101,13 @@ void Widget::onEvent(sf::Event e) {
 			}
 			break;
 		}
+        case sf::Event::MouseMoved: { 
+            sf::Event::MouseMoveEvent mouse = e.mouseMove;
+            if (doCollide(mouse.x, mouse.y))
+               OnMouseMove(sf::Vector2i(mouse.x, mouse.y));
+            break;
+        }
+
 		case sf::Event::KeyPressed: {
 			OnKeyPressed(e.key.code);
 			break;
@@ -130,6 +142,7 @@ void Widget::onEvent(sf::Event e) {
 
 SET_LISTENER(OnMouseDown, sf::Vector2i)
 SET_LISTENER(OnMouseUp, sf::Vector2i)
+SET_LISTENER(OnMouseMove, sf::Vector2i)
 SET_LISTENER(OnKeyPressed, sf::Keyboard::Key)
 SET_LISTENER(OnKeyReleased, sf::Keyboard::Key)
 SET_LISTENER_VOID(OnClicked)

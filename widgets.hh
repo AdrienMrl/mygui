@@ -26,6 +26,8 @@ class Widget {
 
     void setOnMouseDownListener(void (*ptr)(Widget *, sf::Vector2i));
     virtual void OnMouseDown(sf::Vector2i pos);
+    void setOnMouseMoveListener(void (*ptr)(Widget *, sf::Vector2i));
+    virtual void OnMouseMove(sf::Vector2i pos);
     void setOnMouseUpListener(void (*ptr)(Widget *, sf::Vector2i));
 	virtual void OnMouseUp(sf::Vector2i);
     void setOnKeyPressedListener(void (*ptr)(Widget *, sf::Keyboard::Key key));
@@ -44,12 +46,14 @@ class Widget {
 
     void (*mOnMouseDownListener)(Widget *, sf::Vector2i pos) = NULL;
     void (*mOnMouseUpListener)(Widget *, sf::Vector2i pos) = NULL;
+    void (*mOnMouseMoveListener)(Widget *, sf::Vector2i pos) = NULL;
     void (*mOnKeyPressedListener)(Widget *, sf::Keyboard::Key) = NULL;
     void (*mOnKeyReleasedListener)(Widget *, sf::Keyboard::Key) = NULL;
     void (*mOnClickedListener)(Widget *) = NULL;
 
     void addWidget(Widget *);
 	int take(int idx, int pos, Widget *&);
+    bool doCollide(int x, int y) const;
 };
 
 class Rectangle : public Widget {

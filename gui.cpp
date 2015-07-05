@@ -2,9 +2,12 @@
 #include <SFML/System.hpp>
 #include <iostream>
 
-GUI::GUI(const std::string& name)
+GUI::GUI(const std::string& name, int type)
   : base(1920, 1080, 0, 0, NULL),
-   	window(sf::VideoMode(1920, 1080), name.c_str()) {
+   	window(sf::VideoMode(1920, 1080), name.c_str(),
+            type == 0 ? sf::Style::None : type == 1
+                ? sf::Style::Titlebar
+                : sf::Style::Default) {
       base.setWindow(&window);
 }
 

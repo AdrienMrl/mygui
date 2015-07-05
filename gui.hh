@@ -11,7 +11,7 @@ class Timer;
 class GUI {
 
   public:
-    GUI(const std::string& name = "");
+    GUI(const std::string& name = "", int WindowType = 2);
     void addWidget(Widget *w);
     int execute();
 	void addTimer(Timer *);
