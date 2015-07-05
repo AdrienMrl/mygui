@@ -9,7 +9,8 @@ SRC = gui.cpp \
 	  line.cpp \
 	  picture.cpp \
 	  timer.cpp \
-	  checkbox.cpp
+	  checkbox.cpp \
+	  radiobutton.cpp
 
 
 OBJ =$(SRC:.cpp=.o)

@@ -139,22 +139,31 @@ class Timer : public Widget {
 
 };
 
-class CheckBox : Widget {
-
+class RadioButton : public Widget {
 	public:
-		CheckBox(int, int, const std::string&, Widget *);
-		void setText(const std::string&);
+		RadioButton(int, int, Widget *);
 		bool isChecked() const;
 		void toggle();
 		void setChecked(bool checked);
 		void update();
-		void computeDimens();
 		sf::Vector2i draw();
 		void OnClicked();
 
+	protected:
+		bool checked = false;
+		sf::CircleShape circle;
+
+};
+
+class CheckBox : public RadioButton {
+
+	public:
+		CheckBox(int, int, const std::string&, Widget *);
+		void setText(const std::string&);
+		void computeDimens();
+
     protected:
 		Label  label;
-		bool checked = false;
 		std::string mText;
 };
 
