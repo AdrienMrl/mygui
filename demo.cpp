@@ -30,7 +30,7 @@ int main()
   Point *p = new Point(500, 900, window);
   p->setColor(sf::Color(255, 0, 0));
 
-  Button *button = new Button(400, 100, "Click me", window);
+  Button *button = new Button(1300, 700, "Click me", window);
   button->setOnClickedListener(onClicked);
   button->setOnMouseMoveListener(onMouseDown);
   button->setSize(300, 200);
@@ -50,8 +50,6 @@ int main()
 
   new Triangle(20, 10, 300, 200, 10, 220, window);
 
-  new Button(10, 10, "click!", new Window(200, 200, 1, app));
-  new Button(10, 10, "click!", new Window(200, 200, 1, app));
-  new Button(10, 10, "click!", new Window(200, 200, 1, app));
+  new TextBox(10, 10, button, "password");
   return app.execute();
 }

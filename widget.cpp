@@ -121,9 +121,14 @@ void Widget::onEvent(sf::Event e) {
 		}
 
 		case sf::Event::KeyReleased: {
-										 OnKeyReleased(e.key.code);
+	    	 OnKeyReleased(e.key.code);
+             break;
 	    }
 
+        case sf::Event::TextEntered: {
+             OnTextEntered(e.text.unicode);
+             break;
+                                     }
 
 		default: {
 			break;
@@ -152,6 +157,7 @@ SET_LISTENER(OnMouseUp, sf::Vector2i)
 SET_LISTENER(OnMouseMove, sf::Vector2i)
 SET_LISTENER(OnKeyPressed, sf::Keyboard::Key)
 SET_LISTENER(OnKeyReleased, sf::Keyboard::Key)
+SET_LISTENER(OnTextEntered, sf::Uint32)
 SET_LISTENER_VOID(OnClicked)
 
 int Widget::take(int idx, Widget *&dest) {

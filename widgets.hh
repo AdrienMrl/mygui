@@ -36,12 +36,14 @@ class Widget {
     virtual void OnMouseMove(sf::Vector2i pos);
     void setOnMouseUpListener(void (*ptr)(Widget *, sf::Vector2i));
 	virtual void OnMouseUp(sf::Vector2i);
-    void setOnKeyPressedListener(void (*ptr)(Widget *, sf::Keyboard::Key key));
+    void setOnKeyPressedListener(void (*ptr)(Widget *, sf::Keyboard::Key));
 	virtual void OnKeyPressed(sf::Keyboard::Key k);
-    void setOnKeyReleasedListener(void (*ptr)(Widget *, sf::Keyboard::Key key));
+    void setOnKeyReleasedListener(void (*ptr)(Widget *, sf::Keyboard::Key));
 	virtual void OnKeyReleased(sf::Keyboard::Key);
     void setOnClickedListener(void (*ptr)(Widget *));
 	virtual void OnClicked();
+    void setOnTextEnteredListener(void (*ptr)(Widget *, sf::Uint32));
+	virtual void OnTextEntered(sf::Uint32);
 
     virtual Type getType() const { return OTHER; }
 
@@ -58,6 +60,7 @@ class Widget {
     void (*mOnKeyPressedListener)(Widget *, sf::Keyboard::Key) = NULL;
     void (*mOnKeyReleasedListener)(Widget *, sf::Keyboard::Key) = NULL;
     void (*mOnClickedListener)(Widget *) = NULL;
+    void (*mOnTextEnteredListener)(Widget *, sf::Uint32) = NULL;
 
     void addWidget(Widget *);
 	int take(int idx, int pos, Widget *&);
@@ -77,9 +80,10 @@ class Rectangle : public Widget {
 class Label : public Widget {
 
   public:
-    Label(int, int, const std::string& text, Widget *);
+    Label(int, int, const sf::String& text, Widget *);
     virtual sf::Vector2i draw();
-    void setText(const std::string&);
+    void setText(const sf::String&);
+    sf::String getText() const { return text.getString(); };
     void prepare();
     sf::Font font;
 
@@ -240,6 +244,19 @@ class Window : public Widget
 
 		bool hasShift = false;
 		void focusNext();
+};
+
+class TextBox : public Rectangle
+{
+    public:
+        TextBox(int, int, Widget *, const std::string& def = "");
+        void setEditable(bool mode);
+        void OnTextEntered(sf::Uint32 unicode);
+        void OnKeyPressed(sf::Keyboard::Key k);
+
+    private:
+        Label label;
+        bool editable = true;
 };
 
 #endif

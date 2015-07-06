@@ -4,7 +4,6 @@
 Window::Window(int sx, int sy, int type, GUI& gui)
     : Widget(sx, sy, 0, 0, NULL)
 {
-    sf::sleep(sf::milliseconds(100));
     mwindow =
         new sf::RenderWindow(sf::VideoMode(sx, sy), "MyGui",
             type == 0 ? sf::Style::None : type == 1

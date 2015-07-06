@@ -13,6 +13,7 @@ SRC = gui.cpp \
 	  scrollbar.cpp \
 	  triangle.cpp \
 	  window.cpp \
+	  textbox.cpp \
 
 
 OBJ =$(SRC:.cpp=.o)

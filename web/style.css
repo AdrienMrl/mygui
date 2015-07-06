@@ -1,0 +1,43 @@
+@font-face {
+  font-family: OpenSans;
+  src: url(OpenSans-Regular.ttf);
+}
+
+@font-face {
+  font-family: OpenSansLight;
+  src: url(OpenSans-Light.ttf);
+}
+
+#header {
+  height: 20%;
+  background: rgb(4, 77, 140);
+  box-shadow: 0px 0px 20px black;
+}
+
+body {
+  font-family: OpenSansLight;
+  background-color: rgb(242, 236, 206);
+  margin: 0;
+}
+
+p {
+  color: rgb(10, 39, 64);
+  padding: 4vw;
+}
+
+a {
+  k: none;
+  color: rgb(242, 82, 46);
+  text-decoration: none;
+}
+
+img {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+}
+
+h1 {
+  color: rgb(252, 72, 56);
+  padding: 4vw;
+}

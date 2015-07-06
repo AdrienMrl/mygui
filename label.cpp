@@ -2,14 +2,14 @@
 #include <cassert>
 #include <iostream>
 
-Label::Label(int px, int py, const std::string& txt, Widget *parent) :
+Label::Label(int px, int py, const sf::String& txt, Widget *parent) :
 	Widget(0, 0, px, py, parent)
 {
 	setText(txt);
 	mColor = sf::Color(0, 0, 0);
 }
 
-void Label::setText(const std::string& txt)
+void Label::setText(const sf::String& txt)
 {
 	text.setString(txt);
 	font.loadFromFile("OpenSans-Regular.ttf");
