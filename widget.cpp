@@ -57,6 +57,10 @@ sf::Vector2i Widget::draw() {
 
   sf::Vector2i dimens = getDimens();
 
+  //hotfix due to crash below!
+  if (getType() == WINDOW)
+      parent = NULL;
+
   // draw the focused square
   if (parent && this == parent->getFocused()) {
 

@@ -52,29 +52,6 @@ int GUI::execute() {
       }
   }
 
-  /*
-
-  while (window.isOpen()) {
-	
-	sf::sleep(delay);
-	for (Timer *t : timers)
-		t->tick(delay);
-
-    while (window.pollEvent(event)) {
-
-		if (event.type == sf::Event::Closed)
-			window.close();
-		else
-			base.onEvent(event);
-    }
-
-	window.clear(sf::Color(200, 200, 220));
-	base.draw();
-	window.display();
-
-  }
-  */
-
   return 0;
 
 }

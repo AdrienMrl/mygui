@@ -39,7 +39,7 @@ int main()
   l->setColor(sf::Color::Red);
   
 
-  Picture *pic = new Picture(1000, 1200, 440, 660, "dog.jpg", window);
+  Picture *pic = new Picture(600, 500, 440, 260, "dog.jpg", window);
   pic->setRepeated(true);
 
   Timer *timer = new Timer(1000, app);
@@ -50,6 +50,8 @@ int main()
 
   new Triangle(20, 10, 300, 200, 10, 220, window);
 
-  new Button(10, 10, "click!", new Window(200, 200, 2, app));
+  new Button(10, 10, "click!", new Window(200, 200, 1, app));
+  new Button(10, 10, "click!", new Window(200, 200, 1, app));
+  new Button(10, 10, "click!", new Window(200, 200, 1, app));
   return app.execute();
 }
