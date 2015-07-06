@@ -11,15 +11,15 @@ class Timer;
 class GUI {
 
   public:
-    GUI(const std::string& name = "", int WindowType = 2);
-    void addWidget(Widget *w);
+    GUI(int WindowType = 2);
     int execute();
 	void addTimer(Timer *);
+    void addWindow(Window *);
+    Window *getWindow() const;
 
-    Base base;
+    std::list<Window *> windows;
 
   private:
-    sf::RenderWindow window;
 	std::list<Timer *> timers;
 };
 

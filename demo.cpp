@@ -13,9 +13,12 @@ static void onClicked(Widget *) {
 
 int main()
 {
-  static GUI app("demo app", 0);
+  static GUI app(2);
 
-  Rectangle *rectangle = new Rectangle(10, 900, 100, 100, &app.base);
+  Window *window = app.getWindow();
+
+  
+  Rectangle *rectangle = new Rectangle(100, 100, 100, 100, window);
   Label *test = new Label(10, 20, "I'm a label. And i'm long", rectangle);
   test->setText("Foooooo");
   new Label(130, 200, "i'm very very long", rectangle);
@@ -24,27 +27,29 @@ int main()
 
   test->setOnMouseDownListener(onMouseDown);
 
-  Point *p = new Point(500, 900, &app.base);
+  Point *p = new Point(500, 900, window);
   p->setColor(sf::Color(255, 0, 0));
 
-  Button *button = new Button(400, 100, "Click me", &app.base);
+  Button *button = new Button(400, 100, "Click me", window);
   button->setOnClickedListener(onClicked);
   button->setOnMouseMoveListener(onMouseDown);
   button->setSize(300, 200);
 
-  Line *l = new Line(900, 900, 100, 45, &app.base);
+  Line *l = new Line(900, 900, 100, 45, window);
   l->setColor(sf::Color::Red);
   
 
-  Picture *pic = new Picture(1900, 2000, 440, 660, "dog.jpg", &app.base);
+  Picture *pic = new Picture(1000, 1200, 440, 660, "dog.jpg", window);
   pic->setRepeated(true);
 
   Timer *timer = new Timer(1000, app);
   timer->setOnClickedListener(onClicked);
 
-  new ScrollBar(30, 200, 1000, 200, ScrollBar::VERTICAL, &app.base);
-  new ScrollBar(200, 30, 1300, 300, ScrollBar::HORIZONTAL, &app.base);
+  new ScrollBar(30, 200, 1200, 200, ScrollBar::VERTICAL, window);
+  new ScrollBar(200, 30, 1500, 300, ScrollBar::HORIZONTAL, window);
 
-  new Triangle(20, 10, 300, 200, 10, 220, &app.base);
+  new Triangle(20, 10, 300, 200, 10, 220, window);
+
+  new Button(10, 10, "click!", new Window(200, 200, 2, app));
   return app.execute();
 }

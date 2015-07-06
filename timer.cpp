@@ -3,7 +3,7 @@
 #include "widgets.hh"
 
 Timer::Timer(int delayms, GUI& gui) :
-    Widget(0, 0, 0, 0, &gui.base), timerDelay(delayms) {
+    Widget(0, 0, 0, 0, NULL), timerDelay(delayms) {
     gui.addTimer(this);
 }
 

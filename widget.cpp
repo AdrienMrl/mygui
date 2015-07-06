@@ -13,8 +13,11 @@ void Widget::setWindow(sf::RenderWindow* w) {
 
 sf::Vector2i Widget::getPosRelative() const {
 
-  return sf::Vector2i(mpx - parent->getX(),
-                      mpy - parent->getY());
+    int parX = parent ? parent->getX() : 0;
+    int parY = parent ? parent->getY() : 0;
+
+  return sf::Vector2i(mpx - parX,
+                      mpy - parY);
 }
 
 sf::Vector2i Widget::getDimens() const {

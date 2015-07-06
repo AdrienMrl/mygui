@@ -8,6 +8,12 @@
 class Widget {
 
   public:
+
+      enum Type {
+          WINDOW,
+          OTHER,
+      };
+
     Widget(int, int, int, int, Widget *);
     void setWindow(sf::RenderWindow*);
     void setParent(Widget *);
@@ -36,6 +42,8 @@ class Widget {
 	virtual void OnKeyReleased(sf::Keyboard::Key);
     void setOnClickedListener(void (*ptr)(Widget *));
 	virtual void OnClicked();
+
+    virtual Type getType() const { return OTHER; }
 
   protected:
     int msx, msy, mpx, mpy;
@@ -213,6 +221,25 @@ class ScrollBar : public Rectangle
 		Rectangle cursor;
 		int progress = 50;
 		orientation morientation;
+};
+
+class Window : public Widget
+{
+    public:
+        Window(int, int, int type, GUI& gui);
+        Type getType() const;
+        sf::RenderWindow *getWindow() const;
+		void OnKeyPressed(sf::Keyboard::Key);
+		void OnKeyReleased(sf::Keyboard::Key);
+		const Widget *getFocused();
+        sf::Vector2i draw();
+
+	private:
+		unsigned focus_idx = 0;
+		Widget *focused = NULL;
+
+		bool hasShift = false;
+		void focusNext();
 };
 
 #endif

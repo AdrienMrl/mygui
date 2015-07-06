@@ -3,7 +3,6 @@ SRC = gui.cpp \
 	  widget.cpp \
 	  rect.cpp \
 	  label.cpp \
-	  base.cpp \
 	  point.cpp \
 	  button.cpp \
 	  line.cpp \
@@ -13,6 +12,7 @@ SRC = gui.cpp \
 	  radiobutton.cpp \
 	  scrollbar.cpp \
 	  triangle.cpp \
+	  window.cpp \
 
 
 OBJ =$(SRC:.cpp=.o)
