@@ -11,6 +11,18 @@ static void onClicked(Widget *) {
 	std::cout << "clicked !" << std::endl;
 }
 
+static void onMouseMove(Widget *, sf::Vector2i pos) {
+    std::cout << "mouse moved!" << std::endl;
+}
+
+static void onMouseEnter(Widget *) {
+    std::cout << "mouse enter!" << std::endl;
+}
+
+static void onMouseExit(Widget *) {
+    std::cout << "mouse exits!" << std::endl;
+}
+
 int main()
 {
   static GUI app(2);
@@ -32,7 +44,7 @@ int main()
 
   Button *button = new Button(1300, 700, "Click me", window);
   button->setOnClickedListener(onClicked);
-  button->setOnMouseMoveListener(onMouseDown);
+  button->setOnMouseMoveListener(onMouseMove);
   button->setSize(300, 200);
 
   Line *l = new Line(900, 900, 100, 45, window);
@@ -41,6 +53,8 @@ int main()
 
   Picture *pic = new Picture(600, 500, 440, 260, "dog.jpg", window);
   pic->setRepeated(true);
+  pic->setOnMouseEnterListener(onMouseEnter);
+  pic->setOnMouseExitListener(onMouseExit);
 
   Timer *timer = new Timer(1000, app);
   timer->setOnClickedListener(onClicked);

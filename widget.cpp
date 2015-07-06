@@ -110,8 +110,17 @@ void Widget::onEvent(sf::Event e) {
 		}
         case sf::Event::MouseMoved: { 
             sf::Event::MouseMoveEvent mouse = e.mouseMove;
-            if (doCollide(mouse.x, mouse.y))
-               OnMouseMove(sf::Vector2i(mouse.x, mouse.y));
+            if (doCollide(mouse.x, mouse.y)) {
+                if (!isMouseIn) {
+                    isMouseIn = true;
+                    OnMouseEnter();
+                }
+                OnMouseMove(sf::Vector2i(mouse.x, mouse.y));
+            } else
+                if (isMouseIn) {
+                    isMouseIn = false;
+                    OnMouseExit();
+                }
             break;
         }
 
@@ -159,6 +168,8 @@ SET_LISTENER(OnKeyPressed, sf::Keyboard::Key)
 SET_LISTENER(OnKeyReleased, sf::Keyboard::Key)
 SET_LISTENER(OnTextEntered, sf::Uint32)
 SET_LISTENER_VOID(OnClicked)
+SET_LISTENER_VOID(OnMouseEnter)
+SET_LISTENER_VOID(OnMouseExit)
 
 int Widget::take(int idx, Widget *&dest) {
 	return take(idx, 0, dest);

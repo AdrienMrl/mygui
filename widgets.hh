@@ -44,6 +44,10 @@ class Widget {
 	virtual void OnClicked();
     void setOnTextEnteredListener(void (*ptr)(Widget *, sf::Uint32));
 	virtual void OnTextEntered(sf::Uint32);
+    void setOnMouseEnterListener(void (*ptr)(Widget *));
+	virtual void OnMouseEnter();
+    void setOnMouseExitListener(void (*ptr)(Widget *));
+	virtual void OnMouseExit();
 
     virtual Type getType() const { return OTHER; }
 
@@ -53,6 +57,7 @@ class Widget {
     Widget* parent;
     std::list<Widget *> children;
 	sf::Color mColor;
+    bool isMouseIn = false;
 
     void (*mOnMouseDownListener)(Widget *, sf::Vector2i pos) = NULL;
     void (*mOnMouseUpListener)(Widget *, sf::Vector2i pos) = NULL;
@@ -61,6 +66,8 @@ class Widget {
     void (*mOnKeyReleasedListener)(Widget *, sf::Keyboard::Key) = NULL;
     void (*mOnClickedListener)(Widget *) = NULL;
     void (*mOnTextEnteredListener)(Widget *, sf::Uint32) = NULL;
+    void (*mOnMouseEnterListener)(Widget *) = NULL;
+    void (*mOnMouseExitListener)(Widget *) = NULL;
 
     void addWidget(Widget *);
 	int take(int idx, int pos, Widget *&);
